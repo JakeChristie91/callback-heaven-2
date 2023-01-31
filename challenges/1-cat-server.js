@@ -1,8 +1,29 @@
 const request = require('../utils/server');
 
-function checkServerStatus() {}
+//this function should take a callback function as its only argument.
 
-function fetchBannerContent() {}
+//your function should invoke the request function with the path /status and the callback function
+
+
+function checkServerStatus(callback) {
+  request('/status', callback);
+}
+
+//this function should take a callback function
+
+//your function should make a request to the /banner end-point which responds with a banner object
+
+//Please update the copyrightYear to 2023
+
+//you should pass the updated banner object to the final callback function
+
+function fetchBannerContent(bannerCallback) {
+  request('/banner', (err, data) => {
+    const newBannerData = {...data}
+    newBannerData.copyrightYear = 2023;
+    bannerCallback(err, newBannerData);
+  })
+}
 
 function fetchAllOwners() {}
 
