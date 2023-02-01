@@ -45,8 +45,8 @@ function fetchCatsByOwner(ownerName, callbackFunc) {
 
 // for each cat name in the passed array, a request should be sent to /pics/:catpic
 
- // each response will represent an actual catpic with the suffix .jpg
-    // the callback function should be invoked with an array of responses once all the catpics have been collated(the order does not matter)
+// each response will represent an actual catpic with the suffix .jpg
+// the callback function should be invoked with an array of responses once all the catpics have been collated(the order does not matter)
 
 // Note: You should make the request to receive the string containing .jpg rather than using a JS method!
 
@@ -57,27 +57,26 @@ function fetchCatPics(arrCats, callbackFunc) {
     callbackFunc(null);
   }
   arrCats.forEach(arrCat => {
+    request(`/pics/${arrCat}`, (err, pictures) => {
+      if (err) {
+        finalCats.push('placeholder.jpg');
+      } else {
+        finalCats.push(pictures);
 
-  request(`/pics/${arrCat}`, (err, pictures) => {
-    if (err) {
-      finalCats.push('placeholder.jpg')
-    } else {
-      finalCats.push(pictures);
-      
-      // the server will respond with an error if the requested pic doesn't contain the word "cat". Therefore, if you receive an error, you must put placeholder.jpg in its place in the response array to act as a placeholder for the missing cat picture.
-    }
-    if (finalCats.length === arrCats.length) {
-      console.log(finalCats, "cats")
-      callbackFunc(null, finalCats);
-    }
-  })
-}) 
+        // the server will respond with an error if the requested pic doesn't contain the word "cat". Therefore, if you receive an error, you must put placeholder.jpg in its place in the response array to act as a placeholder for the missing cat picture.
+      }
+      if (finalCats.length === arrCats.length) {
+        callbackFunc(null, finalCats);
+      }
+    });
+  });
 }
 
-
-
-
-function fetchAllCats() {}
+function fetchAllCats(fetchCallback) {
+  request((err, data) => {
+    if (err) return null;
+  });
+}
 
 function fetchOwnersWithCats() {}
 
